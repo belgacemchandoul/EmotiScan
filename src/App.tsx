@@ -1,5 +1,6 @@
+import HeroSection from "./components/HeroSection";
 function App() {
-  return <div className="font-bold text-9xl">BESMELLEH</div>;
+  return <HeroSection />;
 }
 
 export default App;
