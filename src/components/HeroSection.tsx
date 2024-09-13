@@ -6,9 +6,9 @@ import { Language } from "../types/languages";
 
 interface HeroSectionProps {
   onAnalyze: (text: string, language: string, results: AnalysisResults) => void;
+  onTranslate: (translatedText: string, language: string) => void;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const languageModels: Language = {
   fr: "Helsinki-NLP/opus-mt-en-fr",
   es: "Helsinki-NLP/opus-mt-en-es",
@@ -38,13 +38,15 @@ export interface AnalysisResults {
   sentiment: SentimentAnalysis;
 }
 
-const HeroSection = ({ onAnalyze }: HeroSectionProps) => {
+const HeroSection = ({ onAnalyze, onTranslate }: HeroSectionProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const resultRef = useRef<HTMLDivElement | null>(null);
   const [selectedInputMode, setSelectedInputMode] = useState<string>("text");
   const [inputText, setInputText] = useState<string>("");
   const [selectedLanguage, setSelectedLanguage] =
     useState<keyof typeof languageModels>("fr");
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
@@ -52,6 +54,9 @@ const HeroSection = ({ onAnalyze }: HeroSectionProps) => {
   }, []);
 
   const handleAnalyze = async () => {
+    if (!inputText) return;
+    setIsLoading(true);
+    setErrorMessage(null);
     try {
       const response = await axios.post(
         "https://api-inference.huggingface.co/models/j-hartmann/emotion-english-distilroberta-base",
@@ -67,7 +72,6 @@ const HeroSection = ({ onAnalyze }: HeroSectionProps) => {
         label: result.label,
         score: result.score,
       }));
-
       const sentimentResponse = await axios.post(
         "https://api-inference.huggingface.co/models/cardiffnlp/twitter-roberta-base-sentiment-latest",
         { inputs: inputText },
@@ -98,11 +102,45 @@ const HeroSection = ({ onAnalyze }: HeroSectionProps) => {
 
       const results = { emotions, sentiment: sentimentData };
       onAnalyze(inputText, selectedLanguage, results);
+      if (resultRef.current) {
+        resultRef.current.scrollIntoView({ behavior: "smooth" });
+      }
     } catch (error) {
+      setErrorMessage("Failed to analyze the text. Please try again.");
       console.error("Error analyzing text:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
-
+  const handleTranslate = async () => {
+    if (!inputText) return;
+    setIsLoading(true);
+    setErrorMessage(null);
+    try {
+      const response = await axios.post(
+        `https://api-inference.huggingface.co/models/${languageModels[selectedLanguage]}`,
+        {
+          inputs: inputText,
+        },
+        {
+          headers: {
+            Authorization: `Bearer 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`,
+          },
+        }
+      );
+      const translatedText = response.data[0].translation_text;
+      onTranslate(translatedText, selectedLanguage);
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: "smooth",
+      });
+    } catch (error) {
+      setErrorMessage("Failed to translate the text. Please try again.");
+      console.error("Error translating text:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <section className="relative bg-black text-white min-h-screen flex items-center justify-center overflow-hidden">
       <motion.div
@@ -169,17 +207,16 @@ const HeroSection = ({ onAnalyze }: HeroSectionProps) => {
           />
           <button
             onClick={handleAnalyze}
-            className="w-full max-w-xl mt-4 py-3 bg-cyan-500 hover:bg-cyan-600 text-white font-bold rounded-lg transition transform hover:scale-105 shadow-lg focus:outline-none duration-200"
+            className={`w-full max-w-xl mt-4 py-3 mb-4 bg-cyan-500 hover:bg-cyan-600 text-white font-bold rounded-lg transition transform hover:scale-105 shadow-lg focus:outline-none duration-200 ${
+              isLoading || inputText.length === 0
+                ? "opacity-50 cursor-not-allowed"
+                : ""
+            }`}
+            disabled={isLoading || inputText.length === 0}
           >
-            Analyze
+            {isLoading ? "Analyzing..." : "Analyze"}
           </button>
-          {/* <button
-            onClick={handleTranslate}
-            className="w-full max-w-xl mt-4 py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition transform hover:scale-105 shadow-lg focus:outline-none duration-200"
-            disabled={inputText.length === 0}
-          >
-            Translate
-          </button> */}
+          {errorMessage && <p className="mt-4 text-red-500">{errorMessage}</p>}
           <select
             className="w-full max-w-xl mt-4 py-3 bg-gray-800 text-white rounded-lg"
             value={selectedLanguage}
@@ -193,6 +230,17 @@ const HeroSection = ({ onAnalyze }: HeroSectionProps) => {
             <option value="it">Italian</option>
             <option value="ar">Arabic</option>
           </select>
+          <button
+            onClick={handleTranslate}
+            className={`w-full max-w-xl mt-4 py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition transform hover:scale-105 shadow-lg focus:outline-none duration-200 ${
+              isLoading || inputText.length === 0
+                ? "opacity-50 cursor-not-allowed"
+                : ""
+            }`}
+            disabled={isLoading || inputText.length === 0}
+          >
+            {isLoading ? "Translating..." : "Translate"}
+          </button>
         </motion.div>
       </div>
     </section>
