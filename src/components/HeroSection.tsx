@@ -43,7 +43,8 @@ const HeroSection = ({ onAnalyze, onTranslate }: HeroSectionProps) => {
   const [inputText, setInputText] = useState<string>("");
   const [selectedLanguage, setSelectedLanguage] =
     useState<keyof typeof languageModels>("fr");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
+  const [isTranslating, setIsTranslating] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   useEffect(() => {
     if (inputRef.current) {
@@ -53,11 +54,11 @@ const HeroSection = ({ onAnalyze, onTranslate }: HeroSectionProps) => {
 
   const handleAnalyze = async () => {
     if (!inputText) return;
-    setIsLoading(true);
+    setIsAnalyzing(true);
     setErrorMessage(null);
     try {
       const response = await axios.post(
-        "https://api-inference.huggingface.co/models/j-hartmann/emotion-english-distilroberta-base",
+        "https://api-inference.huggingface.co/models/bhadresh-savani/distilbert-base-uncased-emotion",
         { inputs: inputText },
         {
           headers: {
@@ -107,12 +108,12 @@ const HeroSection = ({ onAnalyze, onTranslate }: HeroSectionProps) => {
       setErrorMessage("Failed to analyze the text. Please try again.");
       console.error("Error analyzing text:", error);
     } finally {
-      setIsLoading(false);
+      setIsAnalyzing(false);
     }
   };
   const handleTranslate = async () => {
     if (!inputText) return;
-    setIsLoading(true);
+    setIsTranslating(true);
     setErrorMessage(null);
     try {
       const response = await axios.post(
@@ -136,7 +137,7 @@ const HeroSection = ({ onAnalyze, onTranslate }: HeroSectionProps) => {
       setErrorMessage("Failed to translate the text. Please try again.");
       console.error("Error translating text:", error);
     } finally {
-      setIsLoading(false);
+      setIsTranslating(false);
     }
   };
   return (
@@ -179,7 +180,7 @@ const HeroSection = ({ onAnalyze, onTranslate }: HeroSectionProps) => {
         ></motion.div>
 
         <motion.div
-          className="mt-8"
+          className="mt-8 flex flex-col items-center "
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 1 }}
@@ -195,39 +196,43 @@ const HeroSection = ({ onAnalyze, onTranslate }: HeroSectionProps) => {
           <button
             onClick={handleAnalyze}
             className={`w-full max-w-xl mt-4 py-3 mb-4 bg-cyan-500 hover:bg-cyan-600 text-white font-bold rounded-lg transition transform hover:scale-105 shadow-lg focus:outline-none duration-200 ${
-              isLoading || inputText.length === 0
+              isAnalyzing || inputText.length === 0
                 ? "opacity-50 cursor-not-allowed"
                 : ""
             }`}
-            disabled={isLoading || inputText.length === 0}
+            disabled={isAnalyzing || inputText.length === 0}
           >
-            {isLoading ? "Analyzing..." : "Analyze"}
+            {isAnalyzing ? "Analyzing..." : "Analyze"}
           </button>
           {errorMessage && <p className="mt-4 text-red-500">{errorMessage}</p>}
-          <select
-            className="w-full max-w-xl mt-4 py-3 bg-gray-800 text-white rounded-lg"
-            value={selectedLanguage}
-            onChange={(e) =>
-              setSelectedLanguage(e.target.value as keyof typeof languageModels)
-            }
-          >
-            <option value="fr">French</option>
-            <option value="es">Spanish</option>
-            <option value="de">German</option>
-            <option value="it">Italian</option>
-            <option value="ar">Arabic</option>
-          </select>
-          <button
-            onClick={handleTranslate}
-            className={`w-full max-w-xl mt-4 py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition transform hover:scale-105 shadow-lg focus:outline-none duration-200 ${
-              isLoading || inputText.length === 0
-                ? "opacity-50 cursor-not-allowed"
-                : ""
-            }`}
-            disabled={isLoading || inputText.length === 0}
-          >
-            {isLoading ? "Translating..." : "Translate"}
-          </button>
+          <div className="flex items-center gap-3 max-w-xl">
+            <select
+              className="w-full mt-4 py-3 bg-gray-800 text-white rounded-lg"
+              value={selectedLanguage}
+              onChange={(e) =>
+                setSelectedLanguage(
+                  e.target.value as keyof typeof languageModels
+                )
+              }
+            >
+              <option value="fr">French</option>
+              <option value="es">Spanish</option>
+              <option value="de">German</option>
+              <option value="it">Italian</option>
+              <option value="ar">Arabic</option>
+            </select>
+            <button
+              onClick={handleTranslate}
+              className={`w-full mt-4 py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition transform hover:scale-105 shadow-lg focus:outline-none duration-200 ${
+                isTranslating || inputText.length === 0
+                  ? "opacity-50 cursor-not-allowed"
+                  : ""
+              }`}
+              disabled={isTranslating || inputText.length === 0}
+            >
+              {isTranslating ? "Translating..." : "Translate"}
+            </button>
+          </div>
           <motion.p
             className="p-4 mb-4 mt-10 font-thin text-xs text-gray-400"
             initial={{ opacity: 0, y: 20 }}

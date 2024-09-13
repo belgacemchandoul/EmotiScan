@@ -38,7 +38,7 @@ const ResultsSection = forwardRef<HTMLDivElement, ResultProps>(
       }
     }, [analysisResults]);
 
-    const pieData = {
+    const pieData = analysisResults && {
       labels: analysisResults?.emotions.map((data) => data.label),
       datasets: [
         {
