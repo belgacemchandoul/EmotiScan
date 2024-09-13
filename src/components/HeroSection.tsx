@@ -1,20 +1,10 @@
 import { motion } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import axios from "axios";
-import { Language } from "../types/languages";
 
 interface HeroSectionProps {
-  onAnalyze: (text: string, language: string, results: AnalysisResults) => void;
-  onTranslate: (translatedText: string, language: string) => void;
+  onAnalyze: (text: string, results: AnalysisResults) => void;
 }
-
-const languageModels: Language = {
-  fr: "Helsinki-NLP/opus-mt-en-fr",
-  es: "Helsinki-NLP/opus-mt-en-es",
-  de: "Helsinki-NLP/opus-mt-en-de",
-  it: "Helsinki-NLP/opus-mt-en-it",
-  ar: "Helsinki-NLP/opus-mt-en-ar",
-};
 
 interface EmotionResult {
   label: string;
@@ -37,14 +27,11 @@ export interface AnalysisResults {
   sentiment: SentimentAnalysis;
 }
 
-const HeroSection = ({ onAnalyze, onTranslate }: HeroSectionProps) => {
+const HeroSection = ({ onAnalyze }: HeroSectionProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const resultRef = useRef<HTMLDivElement | null>(null);
   const [inputText, setInputText] = useState<string>("");
-  const [selectedLanguage, setSelectedLanguage] =
-    useState<keyof typeof languageModels>("fr");
   const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
-  const [isTranslating, setIsTranslating] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   useEffect(() => {
     if (inputRef.current) {
@@ -100,7 +87,7 @@ const HeroSection = ({ onAnalyze, onTranslate }: HeroSectionProps) => {
       };
 
       const results = { emotions, sentiment: sentimentData };
-      onAnalyze(inputText, selectedLanguage, results);
+      onAnalyze(inputText, results);
       if (resultRef.current) {
         resultRef.current.scrollIntoView({ behavior: "smooth" });
       }
@@ -111,35 +98,7 @@ const HeroSection = ({ onAnalyze, onTranslate }: HeroSectionProps) => {
       setIsAnalyzing(false);
     }
   };
-  const handleTranslate = async () => {
-    if (!inputText) return;
-    setIsTranslating(true);
-    setErrorMessage(null);
-    try {
-      const response = await axios.post(
-        `https://api-inference.huggingface.co/models/${languageModels[selectedLanguage]}`,
-        {
-          inputs: inputText,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${import.meta.env.VITE_HF_API_KEY}`,
-          },
-        }
-      );
-      const translatedText = response.data[0].translation_text;
-      onTranslate(translatedText, selectedLanguage);
-      window.scrollTo({
-        top: document.documentElement.scrollHeight,
-        behavior: "smooth",
-      });
-    } catch (error) {
-      setErrorMessage("Failed to translate the text. Please try again.");
-      console.error("Error translating text:", error);
-    } finally {
-      setIsTranslating(false);
-    }
-  };
+
   return (
     <section className="relative bg-black text-white min-h-screen flex items-center justify-center overflow-hidden">
       <motion.div
@@ -205,34 +164,6 @@ const HeroSection = ({ onAnalyze, onTranslate }: HeroSectionProps) => {
             {isAnalyzing ? "Analyzing..." : "Analyze"}
           </button>
           {errorMessage && <p className="mt-4 text-red-500">{errorMessage}</p>}
-          <div className="flex items-center gap-3 max-w-xl">
-            <select
-              className="w-full mt-4 py-3 bg-gray-800 text-white rounded-lg"
-              value={selectedLanguage}
-              onChange={(e) =>
-                setSelectedLanguage(
-                  e.target.value as keyof typeof languageModels
-                )
-              }
-            >
-              <option value="fr">French</option>
-              <option value="es">Spanish</option>
-              <option value="de">German</option>
-              <option value="it">Italian</option>
-              <option value="ar">Arabic</option>
-            </select>
-            <button
-              onClick={handleTranslate}
-              className={`w-full mt-4 py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition transform hover:scale-105 shadow-lg focus:outline-none duration-200 ${
-                isTranslating || inputText.length === 0
-                  ? "opacity-50 cursor-not-allowed"
-                  : ""
-              }`}
-              disabled={isTranslating || inputText.length === 0}
-            >
-              {isTranslating ? "Translating..." : "Translate"}
-            </button>
-          </div>
           <motion.p
             className="p-4 mb-4 mt-10 font-thin text-xs text-gray-400"
             initial={{ opacity: 0, y: 20 }}
@@ -240,7 +171,8 @@ const HeroSection = ({ onAnalyze, onTranslate }: HeroSectionProps) => {
             transition={{ delay: 2, duration: 1 }}
           >
             *We’re currently experiencing issues with the AI’s API. Please bear
-            with us while we work to resolve it. Thank you for your patience!
+            with us while we work to resolve it. We also disabled translation
+            features due to this problem. Thank you for your patience!
           </motion.p>
         </motion.div>
       </div>

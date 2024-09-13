@@ -23,13 +23,11 @@ ChartJS.register(
 
 interface ResultProps {
   inputText: string;
-  detectedLanguage: string;
   analysisResults: AnalysisResults;
-  translatedText: string;
 }
 
 const ResultsSection = forwardRef<HTMLDivElement, ResultProps>(
-  ({ detectedLanguage, analysisResults, translatedText }, ref) => {
+  ({ analysisResults }, ref) => {
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
@@ -135,18 +133,6 @@ const ResultsSection = forwardRef<HTMLDivElement, ResultProps>(
             <Bar data={barData} />
           </div>
         </div>
-        {translatedText && (
-          <div className=" text-center mt-10 bg-gray-100 p-6 rounded-lg shadow-md overflow-hidden break-words">
-            <p className="text-xl font-semibold mb-4 text-blue-800 ">
-              Translation Language:{" "}
-              <span className="text-lg text-gray-800">{detectedLanguage}</span>
-            </p>
-            <h3 className="text-xl font-semibold mb-4 text-blue-800 ">
-              Translated Text
-            </h3>
-            <p className="text-lg text-gray-800">{translatedText}</p>
-          </div>
-        )}
       </motion.div>
     );
   }
