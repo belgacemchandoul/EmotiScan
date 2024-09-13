@@ -10,9 +10,8 @@ import {
   CategoryScale,
   LinearScale,
 } from "chart.js";
-import { AnalysisResults } from "./HeroSection"; // Import the type
+import { AnalysisResults } from "./HeroSection";
 
-// Register chart components
 ChartJS.register(
   ArcElement,
   Tooltip,
@@ -122,8 +121,8 @@ const ResultsSection = forwardRef<HTMLDivElement, ResultProps>(
           </span>
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 ">
+          <div className="">
             <h3 className="text-lg font-bold mb-4 text-blue-800">
               Emotion Distribution
             </h3>

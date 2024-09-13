@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
-import InputModeButton from "./InputModeButton";
 import axios from "axios";
 import { Language } from "../types/languages";
 
@@ -41,7 +40,6 @@ export interface AnalysisResults {
 const HeroSection = ({ onAnalyze, onTranslate }: HeroSectionProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const resultRef = useRef<HTMLDivElement | null>(null);
-  const [selectedInputMode, setSelectedInputMode] = useState<string>("text");
   const [inputText, setInputText] = useState<string>("");
   const [selectedLanguage, setSelectedLanguage] =
     useState<keyof typeof languageModels>("fr");
@@ -63,7 +61,7 @@ const HeroSection = ({ onAnalyze, onTranslate }: HeroSectionProps) => {
         { inputs: inputText },
         {
           headers: {
-            Authorization: `Bearer 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`,
+            Authorization: `Bearer ${import.meta.env.VITE_HF_API_KEY}`,
           },
         }
       );
@@ -160,17 +158,17 @@ const HeroSection = ({ onAnalyze, onTranslate }: HeroSectionProps) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          EmotiScan
+          🧠 EmotiScan
         </motion.h1>
 
         <motion.p
-          className="text-gray-300 text-xl mb-10"
+          className="text-gray-300 text-xl "
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          Uncover Sentiments and Emotions in Text & Comments. Enter your text or
-          a URL to get started.
+          🔍 Discover the Emotions and Sentiments Behind Your Words. Enter Text
+          to Begin Your Analysis!
         </motion.p>
 
         <motion.div
@@ -178,18 +176,7 @@ const HeroSection = ({ onAnalyze, onTranslate }: HeroSectionProps) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 1 }}
-        >
-          <InputModeButton
-            text="text"
-            onClick={() => setSelectedInputMode("text")}
-            selectedInputMode={selectedInputMode}
-          />
-          <InputModeButton
-            text="URL"
-            onClick={() => setSelectedInputMode("URL")}
-            selectedInputMode={selectedInputMode}
-          />
-        </motion.div>
+        ></motion.div>
 
         <motion.div
           className="mt-8"
@@ -200,7 +187,7 @@ const HeroSection = ({ onAnalyze, onTranslate }: HeroSectionProps) => {
           <input
             type="text"
             className="w-full max-w-xl mx-auto py-4 px-6 bg-gray-800 text-white placeholder-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition transform hover:scale-105 shadow-lg duration-200"
-            placeholder={`Type or paste your ${selectedInputMode} here...`}
+            placeholder={`Type or paste your Text here...`}
             ref={inputRef}
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
