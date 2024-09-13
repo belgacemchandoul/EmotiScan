@@ -75,7 +75,7 @@ const HeroSection = ({ onAnalyze, onTranslate }: HeroSectionProps) => {
         { inputs: inputText },
         {
           headers: {
-            Authorization: `Bearer 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`,
+            Authorization: `Bearer ${import.meta.env.VITE_HF_API_KEY}`,
           },
         }
       );
@@ -122,7 +122,7 @@ const HeroSection = ({ onAnalyze, onTranslate }: HeroSectionProps) => {
         },
         {
           headers: {
-            Authorization: `Bearer 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`,
+            Authorization: `Bearer ${import.meta.env.VITE_HF_API_KEY}`,
           },
         }
       );
@@ -228,6 +228,15 @@ const HeroSection = ({ onAnalyze, onTranslate }: HeroSectionProps) => {
           >
             {isLoading ? "Translating..." : "Translate"}
           </button>
+          <motion.p
+            className="p-4 mb-4 mt-10 font-thin text-xs text-gray-400"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2, duration: 1 }}
+          >
+            *We’re currently experiencing issues with the AI’s API. Please bear
+            with us while we work to resolve it. Thank you for your patience!
+          </motion.p>
         </motion.div>
       </div>
     </section>
