@@ -3,6 +3,7 @@
 # EmotiScan - Emotion and Sentiment Analysis Tool
 
 <p>EmotiScan is a web-based application designed to analyze the emotions and sentiments of any text. Utilizing powerful machine learning models, this tool allows users to extract insights from text data by detecting the emotional tone and sentiment breakdown (positive, negative, or neutral) from any input text.</p>
+<p>Note that translation feautures have been removed due to API's runtime errors and server failure</p>
 
 [![image](https://github.com/user-attachments/assets/6e0cc852-3027-42dc-904d-1f23649c401b)
 ](https://emotiscan.netlify.app/)
@@ -88,3 +89,12 @@
 </li>
 
 </ol>
+
+## Future Features
+
+<ul>
+  <li><strong>Support for more APIs: </strong> Add other models or enhance the current emotion analysis for better accuracy. </li>
+  <li><strong>Real-time updates: </strong> Analyze comments and posts from social media in real-time. </li>
+  <li><strong>More Visualizations: </strong> Additional chart types for a more detailed breakdown of data. </li>
+  <li><strong>Fix Translation API bug: </strong> Reimplement translation in this project since it was removed due to API bugs. </li>
+</ul>
