@@ -83,7 +83,7 @@
 </li>
 <li>Open the app in your browser:
 
-    [npm run dev](http://localhost:5173/)
+    http://localhost:5173/
 
 </li>
 
