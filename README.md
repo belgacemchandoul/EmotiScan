@@ -1,4 +1,5 @@
 # EmotiScan
+<p>This project involves building an AI-powered tool that allows users to input text to analyze the sentiment (positive, neutral, negative) and emotions (e.g., joy, anger, sadness). The app accepts user text input and analyzes it using AI models. It can run sentiment/emotion analysis, and display the results.</p>
 
 <details>
   <summary>Table of Contents</summary>
