@@ -25,3 +25,23 @@
     <strong>API Integration: </strong>Uses Hugging Face APIs to power emotion and sentiment analysis.
   </li>
 </ul>
+
+## How It Works
+
+<ol>
+  <li>Enter any text.</li>
+  <li>The app processes the input and uses pre-trained models to analyze the emotions and sentiments.</li>
+  <li>Visual charts display the results for an easy interpretation of the emotions present in the text and the overall sentiment.</li>
+</ol>
+
+##Tech stack
+
+<ul>
+  <li><strong>ReactJS</strong>: For building the interactive UI.</li>
+    <li><strong>TypeScript</strong>: For adding static typing to the project, enhancing code quality and maintainability.</li>
+    <li><strong>Vite</strong>: For a fast and optimized development environment with a modern build tool.</li>
+    <li><strong>Framer Motion</strong>: For beautiful animations and transitions.</li>
+    <li><strong>Tailwind CSS</strong>: For modern styling and responsive design.</li>
+    <li><strong>Chart.js</strong>: For rendering pie and bar charts that represent the emotional and sentiment data.</li>
+    <li><strong>Axios</strong>: For making API requests to Hugging Face models.</li>
+</ul>
