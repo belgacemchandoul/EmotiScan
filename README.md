@@ -10,18 +10,18 @@
 ## Features
 <ul>
   <li>
-    <strong>Emotion Detection: </strong> Detects various emotions (e.g., joy, sadness, anger) from the input text using advanced AI models.
+    <strong>Emotion Detection: </strong>Detects various emotions (e.g., joy, sadness, anger) from the input text using advanced AI models.
   </li>
   <li>
-    <strong>Sentiment Analysis: </strong> <p>Provides a sentiment score breakdown (positive, negative, and neutral) to understand the overall tone of the text.</p>
+    <strong>Sentiment Analysis: </strong>Provides a sentiment score breakdown (positive, negative, and neutral) to understand the overall tone of the text.
   </li>
   <li>
-    <strong>Visualized Results: </strong> <p>Data is presented with easy-to-understand visualizations, including pie charts for emotion distribution and bar charts for sentiment breakdown.</p>
+    <strong>Visualized Results: </strong>Data is presented with easy-to-understand visualizations, including pie charts for emotion distribution and bar charts for sentiment breakdown.
   </li>
   <li>
-    <strong>Interactive UI:  </strong> <p>Clean, modern UI built using ReactJS, Framer Motion, and Tailwind CSS for an interactive and smooth user experience.</p>
+    <strong>Interactive UI: </strong>Clean, modern UI built using ReactJS, Framer Motion, and Tailwind CSS for an interactive and smooth user experience.
   </li>
   <li>
-    <strong>API Integration:  </strong> <p>Uses Hugging Face APIs to power emotion and sentiment analysis.</p>
+    <strong>API Integration: </strong>Uses Hugging Face APIs to power emotion and sentiment analysis.
   </li>
 </ul>
