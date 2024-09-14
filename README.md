@@ -58,8 +58,9 @@
 
 <ol>
   <li>Clone this repository: 
-   ```sh
-     git clone https://github.com/belgalc/EmotiScan.git
-   ```
+    ```sh
+    
+    git clone https://github.com/belgalc/EmotiScan.git
+    ```
 </li>
 </ol>
