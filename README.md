@@ -61,4 +61,30 @@
     
     git clone https://github.com/belgalc/EmotiScan.git
 </li>
+<li>Navigate to the project directory:
+
+    cd EmotiScan
+
+</li>
+<li>Install dependencies:
+
+    npm install
+
+</li>
+<li>Create a .env file and add your Hugging Face API key:
+
+    VITE_HF_API_KEY =your_api_key
+
+</li>
+<li>Start the development server:
+
+    npm run dev
+
+</li>
+<li>Open the app in your browser:
+
+    [npm run dev](http://localhost:5173/)
+
+</li>
+
 </ol>
