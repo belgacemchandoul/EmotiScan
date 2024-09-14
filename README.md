@@ -10,7 +10,7 @@
 ## Features
 <ul>
   <li>
-    <strong>Emotion Detection: </strong> <p>Detects various emotions (e.g., joy, sadness, anger) from the input text using advanced AI models.</p>
+    <strong>Emotion Detection: </strong> Detects various emotions (e.g., joy, sadness, anger) from the input text using advanced AI models.
   </li>
   <li>
     <strong>Sentiment Analysis: </strong> <p>Provides a sentiment score breakdown (positive, negative, and neutral) to understand the overall tone of the text.</p>
