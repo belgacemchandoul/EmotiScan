@@ -1,4 +1,4 @@
-## EmotiScan
+# EmotiScan
 
 <details>
   <summary>Table of Contents</summary>
