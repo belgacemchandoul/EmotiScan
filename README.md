@@ -34,7 +34,7 @@
   <li>Visual charts display the results for an easy interpretation of the emotions present in the text and the overall sentiment.</li>
 </ol>
 
-##Tech stack
+## Tech stack
 
 <ul>
   <li><strong>ReactJS</strong>: For building the interactive UI.</li>
@@ -44,4 +44,12 @@
     <li><strong>Tailwind CSS</strong>: For modern styling and responsive design.</li>
     <li><strong>Chart.js</strong>: For rendering pie and bar charts that represent the emotional and sentiment data.</li>
     <li><strong>Axios</strong>: For making API requests to Hugging Face models.</li>
+</ul>
+
+## Project Structure
+
+<ul>
+  <li><strong>HeroSection: </strong>The main input section where users can provide their text for analysis.</li>
+  <li><strong>ResultsSection: </strong>Displays the analysis results, including emotion distribution and sentiment scores.</li>
+  <li><strong>API Integration: </strong>Calls to Hugging Face for sentiment and emotion models.</li>
 </ul>
