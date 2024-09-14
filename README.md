@@ -53,3 +53,10 @@
   <li><strong>ResultsSection: </strong>Displays the analysis results, including emotion distribution and sentiment scores.</li>
   <li><strong>API Integration: </strong>Calls to Hugging Face for sentiment and emotion models.</li>
 </ul>
+
+## How to Run Locally
+
+<ol>
+  <li><strong>Clone this repository: </strong> git clone https://github.com/yourusername/emot-scan.git
+</li>
+</ol>
