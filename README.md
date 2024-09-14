@@ -57,6 +57,9 @@
 ## How to Run Locally
 
 <ol>
-  <li><strong>Clone this repository: </strong> git clone https://github.com/yourusername/emot-scan.git
+  <li>Clone this repository: 
+   ```sh
+     git clone https://github.com/belgalc/EmotiScan.git
+   ```
 </li>
 </ol>
