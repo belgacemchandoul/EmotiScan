@@ -24,5 +24,5 @@
 </details>
 
 ## About The Project
-[![image][https://github.com/user-attachments/assets/ba700c3c-d347-4d23-abb8-755206e757c5]](https://emotiscan.netlify.app/)
+[![image](https://github.com/user-attachments/assets/ba700c3c-d347-4d23-abb8-755206e757c5)](https://emotiscan.netlify.app/)
 
