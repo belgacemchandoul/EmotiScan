@@ -45,6 +45,7 @@
     <li><strong>Tailwind CSS</strong>: For modern styling and responsive design.</li>
     <li><strong>Chart.js</strong>: For rendering pie and bar charts that represent the emotional and sentiment data.</li>
     <li><strong>Axios</strong>: For making API requests to Hugging Face models.</li>
+    <li><strong>Hugging face</strong>: For leveraging state-of-the-art pre-trained machine learning models to analyze emotions and sentiments from text.</li>
 </ul>
 
 ## Project Structure
