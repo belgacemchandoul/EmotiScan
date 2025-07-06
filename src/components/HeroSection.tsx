@@ -59,7 +59,7 @@ const HeroSection = ({ onAnalyze }: HeroSectionProps) => {
         score: result.score,
       }));
       const sentimentResponse = await axios.post(
-        "https://api-inference.huggingface.co/models/cardiffnlp/twitter-roberta-base-sentiment-latest",
+        "https://api-inference.huggingface.co/models/cardiffnlp/twitter-roberta-base-sentiment",
         { inputs: inputText },
         {
           headers: {
@@ -69,22 +69,26 @@ const HeroSection = ({ onAnalyze }: HeroSectionProps) => {
       );
 
       const sentimentResults = sentimentResponse.data[0];
-      let dominantSentiment = sentimentResults[0];
-
-      sentimentResults.forEach((result: SentimentResult) => {
-        if (result.score > dominantSentiment.score) {
-          dominantSentiment = result;
-        }
-      });
 
       const sentimentData: SentimentAnalysis = {
-        positive:
-          dominantSentiment.label === "positive" ? dominantSentiment.score : 0,
-        negative:
-          dominantSentiment.label === "negative" ? dominantSentiment.score : 0,
-        neutral:
-          dominantSentiment.label === "neutral" ? dominantSentiment.score : 0,
+        positive: 0,
+        negative: 0,
+        neutral: 0,
       };
+
+      sentimentResults.forEach((result: SentimentResult) => {
+        switch (result.label) {
+          case "LABEL_0":
+            sentimentData.negative = result.score;
+            break;
+          case "LABEL_1":
+            sentimentData.neutral = result.score;
+            break;
+          case "LABEL_2":
+            sentimentData.positive = result.score;
+            break;
+        }
+      });
 
       const results = { emotions, sentiment: sentimentData };
       onAnalyze(inputText, results);
