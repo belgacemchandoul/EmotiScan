@@ -45,7 +45,7 @@ const HeroSection = ({ onAnalyze }: HeroSectionProps) => {
     setErrorMessage(null);
     try {
       const response = await axios.post(
-        "https://api-inference.huggingface.co/models/bhadresh-savani/distilbert-base-uncased-emotion",
+        "https://router.huggingface.co/hf-inference/models/bhadresh-savani/distilbert-base-uncased-emotion",
         { inputs: inputText },
         {
           headers: {
@@ -59,7 +59,7 @@ const HeroSection = ({ onAnalyze }: HeroSectionProps) => {
         score: result.score,
       }));
       const sentimentResponse = await axios.post(
-        "https://api-inference.huggingface.co/models/cardiffnlp/twitter-roberta-base-sentiment",
+        "https://router.huggingface.co/hf-inference/models/cardiffnlp/twitter-roberta-base-sentiment",
         { inputs: inputText },
         {
           headers: {
